@@ -2,7 +2,7 @@
 Contributors: markjaquith
 Donate link: http://txfx.net/wordpress-plugins/donate
 Tags: pages, e-mail, email, monitor, notification
-Requires at least: 3.1
+Requires at least: 3.0
 Tested up to: 3.2
 Stable tag: 0.1
 
@@ -31,6 +31,9 @@ Depends on your setting. With the "published or scheduled" setting, they'll be n
 1. The Manage Page Notifications screen
 
 == Changelog ==
+
+= 0.2 =
+* `esc_textarea()` back compat, for WordPress 3.0.x
 
 = 0.1 =
 * Initial version
