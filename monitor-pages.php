@@ -2,7 +2,7 @@
 /*
 Plugin Name: Monitor Pages
 Description: Monitors pages for creation or addition and e-mails a notification to a list of people that you provide
-Version: 0.3
+Version: 0.4
 Author: Mark Jaquith
 Author URI: http://coveredwebservices.com/
 Text Domain: monitor-pages
@@ -147,7 +147,7 @@ class CWS_Monitor_Pages_Plugin {
 			'pending'     => __( 'Page Made Private', 'monitor-pages' )
 		);
 		$subject = sprintf( __('[%1$s] %2$s: "%3$s"', 'monitor-pages'), $blogname, $events[$type], $post->post_title );
-		$message = sprintf( __( '%1$s: "%2$s"' . "\r\n" . '%3$s', 'monitor-pages' ), $events[$type], $post->post_title, get_permalink( $post->ID ) );
+		$message = sprintf( __( '%1$s: "%2$s"' . "\r\n\r\n" . '%3$s', 'monitor-pages' ), $events[$type], $post->post_title, get_permalink( $post->ID ) );
 		foreach ( $this->get_emails() as $email ) {
 			wp_mail( $email, $subject, $message );
 		}

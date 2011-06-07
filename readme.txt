@@ -31,6 +31,10 @@ Depends on your setting. With the "published or scheduled" setting, they'll be n
 1. The Manage Page Notifications screen
 
 == Changelog ==
+= 0.4 =
+* Fixed a bug where the title wasn't showing up in the message body
+* Added a page link to the message body
+
 = 0.3 =
 * `submit_button()` and `get_submit_button()` back compat, for WordPress 3.0.x
 
