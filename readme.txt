@@ -31,6 +31,8 @@ Depends on your setting. With the "published or scheduled" setting, they'll be n
 1. The Manage Page Notifications screen
 
 == Changelog ==
+= 0.3 =
+* `submit_button()` and `get_submit_button()` back compat, for WordPress 3.0.x
 
 = 0.2 =
 * `esc_textarea()` back compat, for WordPress 3.0.x
