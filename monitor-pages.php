@@ -147,7 +147,7 @@ class CWS_Monitor_Pages_Plugin {
 			'pending'     => __( 'Page Made Private', 'monitor-pages' )
 		);
 		$subject = sprintf( __('[%1$s] %2$s: "%3$s"', 'monitor-pages'), $blogname, $events[$type], $post->post_title );
-		$message = sprintf( __( '%1$s: "%2$s"' . "\r\n", 'monitor-pages' ), $events[$type], $post->post_type );
+		$message = sprintf( __( '%1$s: "%2$s"' . "\r\n" . '%3$s', 'monitor-pages' ), $events[$type], $post->post_title, get_permalink( $post->ID ) );
 		foreach ( $this->get_emails() as $email ) {
 			wp_mail( $email, $subject, $message );
 		}
