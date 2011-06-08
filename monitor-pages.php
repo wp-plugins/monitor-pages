@@ -2,67 +2,13 @@
 /*
 Plugin Name: Monitor Pages
 Description: Monitors pages for creation or addition and e-mails a notification to a list of people that you provide
-Version: 0.4
+Version: 0.4.1
 Author: Mark Jaquith
 Author URI: http://coveredwebservices.com/
 Text Domain: monitor-pages
 */
 
-// Compat for WordPress versions less than 3.1
-if ( !function_exists( 'esc_textarea' ) ) {
-	function esc_textarea( $text ) {
-		$safe_text = htmlspecialchars( $text, ENT_QUOTES );
-		return apply_filters( 'esc_textarea', $safe_text, $text );
-	}
-}
-
-if ( !function_exists( 'submit_button' ) ) {
-	function submit_button( $text = NULL, $type = 'primary', $name = 'submit', $wrap = true, $other_attributes = NULL ) {
-		echo get_submit_button( $text, $type, $name, $wrap, $other_attributes );
-	}
-}
-
-if ( !function_exists( 'get_submit_button' ) ) {
-	function get_submit_button( $text = NULL, $type = 'primary', $name = 'submit', $wrap = true, $other_attributes = NULL ) {
-		switch ( $type ) :
-			case 'primary' :
-			case 'secondary' :
-				$class = 'button-' . $type;
-				break;
-			case 'delete' :
-				$class = 'button-secondary delete';
-				break;
-			default :
-				$class = $type; // Custom cases can just pass in the classes they want to be used
-		endswitch;
-		$text = ( NULL == $text ) ? __( 'Save Changes' ) : $text;
-
-		// Default the id attribute to $name unless an id was specifically provided in $other_attributes
-		$id = $name;
-		if ( is_array( $other_attributes ) && isset( $other_attributes['id'] ) ) {
-			$id = $other_attributes['id'];
-			unset( $other_attributes['id'] );
-		}
-
-		$attributes = '';
-		if ( is_array( $other_attributes ) ) {
-			foreach ( $other_attributes as $attribute => $value ) {
-				$attributes .= $attribute . '="' . esc_attr( $value ) . '" '; // Trailing space is important
-			}
-		} else if ( !empty( $other_attributes ) ) { // Attributes provided as a string
-			$attributes = $other_attributes;
-		}
-
-		$button = '<input type="submit" name="' . esc_attr( $name ) . '" id="' . esc_attr( $id ) . '" class="' . esc_attr( $class );
-		$button	.= '" value="' . esc_attr( $text ) . '" ' . $attributes . ' />';
-
-		if ( $wrap ) {
-			$button = '<p class="submit">' . $button . '</p>';
-		}
-
-		return $button;
-	}
-}
+include( dirname( __FILE__ ) . '/compat/compat.php' );
 
 class CWS_Monitor_Pages_Plugin {
 	static $instance;
@@ -158,6 +104,7 @@ class CWS_Monitor_Pages_Plugin {
 	}
 
 	public function admin_page() {
+		include( dirname( __FILE__ ) . '/compat/admin-compat.php' );
 ?>
 	<div class="wrap">
 	<?php screen_icon( 'edit-pages' ); ?>
@@ -165,19 +112,19 @@ class CWS_Monitor_Pages_Plugin {
 	<?php do_action( 'cws-monitor-pages-notices' ); ?>
 	<form method="post" action="">
 		<?php wp_nonce_field( 'cws-mpp-update-options' ); ?>
-		<table class="form-table"> 
-		<tr valign="top"> 
+		<table class="form-table">
+		<tr valign="top">
 		<th scope="row"><?php _e( 'Send notification e-mails when', 'monitor-pages' ); ?></th>
 		<td><fieldset><legend class="screen-reader-text"><span><?php _e( 'Send notification e-mails when', 'monitor-pages' ); ?></span></legend>
 		<label for="cws-mpp-created"><input type="radio" name="<?php echo self::notify; ?>" id="cws-mpp-created" <?php checked( get_option( self::notify ), 'created' ); ?> value="created" /> <?php _e( 'Pages are published or scheduled', 'monitor-pages' ); ?></label><br />
 		<label for="cws-mpp-both"><input type="radio" name="<?php echo self::notify; ?>" id="cws-mpp-both" <?php checked( get_option( self::notify ), 'both' ); ?> value="both" /> <?php _e( 'Pages are published, scheduled, or modified', 'monitor-pages' ); ?></label><br />
 		</fieldset></td></tr>
 
-		<tr valign="top"> 
+		<tr valign="top">
 		<th scope="row"><?php _e( 'Notification addresses', 'monitor-pages' ); ?></th>
 		<td><fieldset><legend class="screen-reader-text"><span><?php _e( 'Notification addresses', 'monitor-pages' ); ?></span></legend>
-		<p><label for="cws-mpp-emails"><?php _e( 'Send notifications to the following e-mail addresses (one per line)', 'monitor-pages' ); ?></label></p> 
-		<p> 
+		<p><label for="cws-mpp-emails"><?php _e( 'Send notifications to the following e-mail addresses (one per line)', 'monitor-pages' ); ?></label></p>
+		<p>
 		<textarea name="<?php echo self::emails; ?>" rows="10" cols="50" id="cws-mpp-emails" class="large-text code"><?php echo esc_textarea( implode( "\n", $this->get_emails() ) ); ?></textarea>
 		</p>
 		</fieldset></td></tr>

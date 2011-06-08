@@ -31,6 +31,9 @@ Depends on your setting. With the "published or scheduled" setting, they'll be n
 1. The Manage Page Notifications screen
 
 == Changelog ==
+= 0.5 =
+* Better encapsulate the compat code
+
 = 0.4 =
 * Fixed a bug where the title wasn't showing up in the message body
 * Added a page link to the message body
