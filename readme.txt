@@ -31,7 +31,10 @@ Depends on your setting. With the "published or scheduled" setting, they'll be n
 1. The Manage Page Notifications screen
 
 == Changelog ==
-= 0.5 =
+= 0.4.2 =
+* Add a filter, so people can further restrict notifications
+
+= 0.4.1 =
 * Better encapsulate the compat code
 
 = 0.4 =

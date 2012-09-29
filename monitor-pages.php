@@ -2,7 +2,7 @@
 /*
 Plugin Name: Monitor Pages
 Description: Monitors pages for creation or addition and e-mails a notification to a list of people that you provide
-Version: 0.4.1
+Version: 0.4.2
 Author: Mark Jaquith
 Author URI: http://coveredwebservices.com/
 Text Domain: monitor-pages
@@ -67,6 +67,12 @@ class CWS_Monitor_Pages_Plugin {
 					return;
 				break;
 		}
+
+		// Allow a filter to further restrict
+		$proceed = apply_filters( 'cws_monitor_pages_do_notification', true, $post, $new_status, $old_status );
+		if ( !$proceed )
+			return;
+
 		// Still here? Let's craft the notification e-mail
 		$blogname = wp_specialchars_decode( get_option( 'blogname' ), ENT_QUOTES );
 		// Determine the type of event
